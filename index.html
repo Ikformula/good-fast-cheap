@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Good, Fast but not Cheap</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="bootswatch/bootstrap.css" media="screen">
+    <link rel="stylesheet" href="bootswatch/custom.css">
+    
+    <style>
+        .round-button {
+            width: 130px;
+            height: 130px;
+            padding: 10px 16px;
+            font-size: 18px;
+            line-height: 1.33;
+            border-radius: 50%;
+        }
+
+        .display-flex {
+            display: flex;
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" id="root">
+
+    <div class="row justify-content-center mb-5 mb-md-7">
+        <button type="button" id="Good" class="btn btn-info shadow round-button" @click="btnClick('Good')">Good</button>
+    </div>
+    <div class="row justify-content-center mt-5 mt-md-7">
+        <div class="col-md-6 text-center">
+            <p class="text-muted mt-3">Your job may turn out</p><br>
+            <button type="button" class="btn btn-success btn-lg" disabled>{{ theResult }}</button>
+        </div>
+
+    </div>
+    <div class="row justify-content-around">
+        <button type="button" id="Fast" class="btn btn-danger shadow round-button" @click="btnClick('Fast')">Fast</button>
+        <button type="button" id="Cheap" class="btn btn-outline-warning shadow round-button" @click="btnClick('Cheap')">Cheap</button>
+    </div>
+</div>
+
+
+<script src="bootswatch/jquery.js"></script>
+<script src="bootswatch/popper.js"></script>
+<script src="bootswatch/bootstrap.js"></script>
+<script src="bootswatch/custom.js"></script>
+<script src="vue.js"></script>
+<script>
+
+    app = new Vue({
+        el: '#root',
+        data: {
+            a: 'Good',
+            b: 'Fast',
+            result: 'Expensive',
+        },
+        methods: {
+            btnClick: function(c){
+                if(this.a !== c && this.b !== c) {
+                    this.a = this.b;
+                    this.b = c;
+                }
+
+            }
+        },
+
+        computed: {
+            theResult: function(){
+                if(this.a == 'Good' && this.b == 'Fast'){
+                    $('#Good').removeClass('btn-outline-info').addClass('btn-info');
+                    $('#Fast').removeClass('btn-outline-danger').addClass('btn-danger');
+                    $('#Cheap').removeClass('btn-warning').addClass('btn-outline-warning');
+                    return 'Expensive';
+                }else if(this.a == 'Fast' && this.b == 'Cheap'){
+                    $('#Fast').removeClass('btn-outline-danger').addClass('btn-danger');
+                    $('#Cheap').removeClass('btn-outline-warning').addClass('btn-warning');
+                    $('#Good').removeClass('btn-info').addClass('btn-outline-info');
+                    return 'Mediocre';
+                }else if(this.a == 'Cheap' && this.b == 'Good'){
+                    $('#Good').removeClass('btn-outline-info').addClass('btn-info');
+                    $('#Cheap').removeClass('btn-outline-warning').addClass('btn-warning');
+                    $('#Fast').removeClass('btn-danger').addClass('btn-outline-danger');
+                    return 'Slow';
+                }
+            }
+        }
+    })
+</script>
+</body>
+</html>
